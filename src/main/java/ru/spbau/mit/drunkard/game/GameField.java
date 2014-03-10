@@ -1,6 +1,7 @@
 package ru.spbau.mit.drunkard.game;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Denis Zharkov
@@ -16,7 +17,7 @@ public class GameField {
         map = new GameActor[height][width];
     }
 
-    public ArrayList<GameActor> getMovableActors() {
+    public List<GameActor> getMovableActors() {
         ArrayList<GameActor> result = new ArrayList<>();
 
         for (int i = 0; i < height; i++) {
