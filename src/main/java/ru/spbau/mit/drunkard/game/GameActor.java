@@ -6,7 +6,15 @@ package ru.spbau.mit.drunkard.game;
 abstract public class GameActor {
     private GamePoint point;
 
+    protected GameActor(GamePoint point) {
+        this.point = point;
+    }
+
+    protected GameActor() {
+    }
+
     abstract boolean isActing();
+
     abstract void performStep(GameField field);
 
     public GamePoint getPoint() {

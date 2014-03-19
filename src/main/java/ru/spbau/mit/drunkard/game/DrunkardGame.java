@@ -2,20 +2,27 @@ package ru.spbau.mit.drunkard.game;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 /**
- *
  * @author Denis Zharkov
  */
 public class DrunkardGame {
     private final GameField field;
-    private Tavern tavern;
+    private final int maxStep;
     private GameObserver observer = null;
 
-    public DrunkardGame(GameField field, Tavern tavern, PillarActor lamp) {
+    public DrunkardGame(GameField field, List<GameActor> initialActors, int maxStep) {
         this.field = field;
-        this.tavern = tavern;
-        field.putActor(lamp, lamp.getPoint());
+        this.maxStep = maxStep;
+
+        for (GameActor actor : initialActors) {
+            if (actor.getPoint() != null) {
+                field.putActor(actor, actor.getPoint());
+            } else {
+                field.putActorInBackground(actor);
+            }
+        }
     }
 
     private boolean ended() {
@@ -23,8 +30,6 @@ public class DrunkardGame {
     }
 
     private void performStep() {
-        tavern.performStep(field);
-
         ArrayList<GameActor> movableActors = field.getMovableActors();
         Collections.shuffle(movableActors);
 
@@ -34,7 +39,7 @@ public class DrunkardGame {
     }
 
     public void run() {
-        while (!ended()) {
+        for (int step = 0; !ended() && step < maxStep; step++) {
             performStep();
             notifyStep();
         }
@@ -42,10 +47,6 @@ public class DrunkardGame {
 
     public GameField getField() {
         return field;
-    }
-
-    public int getTavernColumn() {
-        return tavern.getPoint().column;
     }
 
     public void notifyStep() {

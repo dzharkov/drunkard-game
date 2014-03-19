@@ -5,11 +5,13 @@ package ru.spbau.mit.drunkard.game;
  */
 public class Tavern extends GameActor {
     private final int sleepTime = 20;
+    private final GamePoint releasePoint;
 
     private int wait = 0;
 
-    public Tavern(GamePoint point) {
+    public Tavern(GamePoint point, GamePoint releasePoint) {
         setPoint(point);
+        this.releasePoint = releasePoint;
     }
 
     @Override
@@ -24,8 +26,8 @@ public class Tavern extends GameActor {
             return;
         }
 
-        if (field.isFree(getPoint())) {
-            field.putActor(new DrunkardActor(), getPoint());
+        if (field.isFree(releasePoint)) {
+            field.putActor(new DrunkardActor(), releasePoint);
             wait = sleepTime;
         }
     }

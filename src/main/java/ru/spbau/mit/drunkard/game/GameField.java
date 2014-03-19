@@ -1,6 +1,8 @@
 package ru.spbau.mit.drunkard.game;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author Denis Zharkov
@@ -15,7 +17,7 @@ public class GameField {
     public GameField(int height, int width) {
         this.height = height;
         this.width = width;
-        map = new GameActor[height][width];
+        map = new GameActor[height + 2][width + 2];
     }
 
     public ArrayList<GameActor> getMovableActors() {
@@ -23,37 +25,59 @@ public class GameField {
     }
 
     public boolean isFree(int x, int y) {
-        return map[y][x] == null;
+        return at(x, y) == null;
     }
 
     public boolean isFree(GamePoint point) {
         return isFree(point.column, point.row);
     }
 
+    private void setValue(GamePoint point, GameActor value) {
+        map[point.row + 1][point.column + 1] = value;
+    }
+
+    public void putActorInBackground(GameActor gameActor) {
+        if (gameActor.isActing()) {
+            movableActors.add(gameActor);
+        }
+    }
+
     public void putActor(GameActor actor, GamePoint point) {
-        map[point.row][point.column] = actor;
+        setValue(point, actor);
         actor.setPoint(point);
 
         if (actor.isActing()) {
             movableActors.add(actor);
         } else {
-            if (movableActors.contains(actor)) {
-                movableActors.remove(actor);
-            }
+            movableActors.remove(actor);
         }
     }
 
+    public void moveActorInBackground(GameActor actor) {
+        setValue(actor.getPoint(), null);
+        actor.setPoint(null);
+    }
+
+    public void deleteActor(GameActor actor) {
+        moveActorInBackground(actor);
+        movableActors.remove(actor);
+    }
 
     public void moveActor(GameActor actor, GamePoint point) {
-        map[actor.getPoint().row][actor.getPoint().column] = null;
+        setValue(actor.getPoint(), null);
         putActor(actor, point);
     }
 
     public boolean isValidPoint(GamePoint point) {
-        return point.row >= 0 && point.column >= 0
-                                && point.row < height
-                                && point.column < width;
+        return isValidPoint(point.column, point.row);
     }
+
+    public boolean isValidPoint(int x, int y) {
+        return x >= 0 && y >= 0
+            && y < height
+            && x < width;
+    }
+
 
     public int getHeight() {
         return height;
@@ -64,10 +88,10 @@ public class GameField {
     }
 
     public GameActor at(int x, int y) {
-        return map[y][x];
+        return map[y + 1][x + 1];
     }
 
     public GameActor at(GamePoint point) {
-        return map[point.row][point.column];
+        return map[point.row + 1][point.column + 1];
     }
 }

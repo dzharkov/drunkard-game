@@ -16,34 +16,55 @@ public class GamePrinter implements GameObserver {
     public void onAfterStep(GameField field) {
         System.out.println();
 
-        int tavernColumn = game.getTavernColumn();
-
-        for (int column = 0; column < field.getWidth(); column++) {
-            System.out.print(column == tavernColumn ? 'T' : ' ');
-        }
-
-        System.out.println();
-
-        for (int row = 0; row < field.getHeight(); row++) {
-            for (int column = 0; column < field.getWidth(); column++) {
-                System.out.print(getCharByActor(field.at(column, row)));
+        for (int row = -1; row <= field.getHeight(); row++) {
+            for (int column = -1; column <= field.getWidth(); column++) {
+                System.out.print(
+                    getCharByActor(
+                        field.at(column, row),
+                        field.isValidPoint(column, row)
+                    )
+                );
             }
 
             System.out.println();
         }
     }
 
-    private char getCharByActor(GameActor actor) {
+    private char getCharByActor(GameActor actor, boolean withinField) {
         if (actor == null) {
-            return '.';
+            return withinField ? '.' : ' ';
         }
 
         if (actor instanceof BottleActor) {
             return 'B';
         }
 
+        if (actor instanceof Tavern) {
+            return 'T';
+        }
+
+        if (actor instanceof PoliceOfficeActor) {
+            return 'S';
+        }
+
+        if (actor instanceof OfficerActor) {
+            return 'P';
+        }
+
+        if (actor instanceof LampActor) {
+            return 'L';
+        }
+
+        if (actor instanceof BottleShopActor) {
+            return 'R';
+        }
+
+        if (actor instanceof BeggarActor) {
+            return 'z';
+        }
+
         if (actor instanceof DrunkardActor) {
-            DrunkardActor drunkardActor = (DrunkardActor)actor;
+            DrunkardActor drunkardActor = (DrunkardActor) actor;
 
             if (drunkardActor.isFallen()) {
                 return '&';

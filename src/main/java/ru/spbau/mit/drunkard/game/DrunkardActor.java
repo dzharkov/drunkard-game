@@ -11,11 +11,11 @@ public class DrunkardActor extends GameActor {
     private boolean hasBottle = true;
 
     private static final Random rand = new Random();
-    private static final int[][] directionVectors = new int[][] {
-        new int[]{1,0},
-        new int[]{0,1},
-        new int[]{-1,0},
-        new int[]{0,-1}
+    private static final int[][] directionVectors = new int[][]{
+        new int[]{1, 0},
+        new int[]{0, 1},
+        new int[]{-1, 0},
+        new int[]{0, -1}
     };
 
     @Override
@@ -63,7 +63,7 @@ public class DrunkardActor extends GameActor {
             } else {
                 GameActor obstacle = field.at(nextPoint);
 
-                if (obstacle instanceof PillarActor || (obstacle instanceof DrunkardActor && ((DrunkardActor)obstacle).isSleeping)) {
+                if (obstacle instanceof PillarActor || (obstacle instanceof DrunkardActor && ((DrunkardActor) obstacle).isSleeping)) {
                     isSleeping = true;
                     field.moveActor(this, getPoint());
                 } else if (obstacle instanceof BottleActor) {
