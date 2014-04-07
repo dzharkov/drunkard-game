@@ -3,20 +3,12 @@ package ru.spbau.mit.drunkard.game;
 /**
  * @author Denis Zharkov
  */
-public class BeggarActor extends GameActor {
+public class BeggarActor extends BasedGameActor {
     private final int sleepAfterTripTime = 30;
-    private final GamePoint shopAt;
     private int sleepTime = 0;
-    private boolean withBottle = false;
-    private BottleActor target = null;
 
     public BeggarActor(GamePoint shopAt) {
-        this.shopAt = shopAt;
-    }
-
-    @Override
-    boolean isActing() {
-        return true;
+        super(shopAt);
     }
 
     @Override
@@ -25,71 +17,44 @@ public class BeggarActor extends GameActor {
             return;
         }
 
-        if (!hasSomethingToDo()) {
-            findBottle(field);
-            return;
-        }
-
-        //near bottle
-        if (!withBottle && getPoint().distance(target.getPoint()) == 1) {
-            field.deleteActor(target);
-
-            target = null;
-            withBottle = true;
-
-            return;
-        }
-
-        //came back to shop
-        if (withBottle && getPoint().equals(shopAt)) {
-            takeBreak(field);
-            return;
-        }
-
-        GamePoint targetPoint = withBottle ? shopAt : target.getPoint();
-
-        //make next step or turn to Office
-        GamePoint next = PathUtils.findNextPointInPath(getPoint(), targetPoint, field);
-        if (next != null) {
-            field.moveActor(this, next);
-        } else {
-            findBottle(field);
-        }
+        super.performStep(field);
     }
 
-    private void takeBreak(GameField field) {
-        field.moveActorInBackground(this);
-        withBottle = false;
-        sleepTime = sleepAfterTripTime;
-    }
-
-    private boolean hasSomethingToDo() {
-        return withBottle || target != null;
-    }
-
-    private void findBottle(GameField field) {
-        if (getPoint() == null && !field.isFree(shopAt)) {
-            return;
+    @Override
+    protected GameActor findTarget(GameField field) {
+        if (getPoint() == null && !field.isFree(getBaseAt())) {
+            return null;
         }
 
-        GamePoint currentPoint = getPoint() == null ? shopAt : getPoint();
+        GamePoint currentPoint = getPoint() == null ? getBaseAt() : getPoint();
 
         for (int row = 0; row < field.getHeight(); row++) {
             for (int column = 0; column < field.getWidth(); column++) {
                 GameActor actor;
-                if (
-                    (actor = field.at(column, row)) != null &&
-                        actor instanceof BottleActor &&
-                        PathUtils.findNextPointInPath(currentPoint, actor.getPoint(), field) != null
-                    ) {
-                    target = (BottleActor) actor;
-
-                    if (getPoint() == null) {
-                        field.putActor(this, shopAt);
-                    }
-
+                if ((actor = field.at(column, row)) != null &&
+                    actor instanceof BottleActor &&
+                    PathUtils.findNextPointInPath(currentPoint, actor.getPoint(), field) != null
+                ) {
+                    return actor;
                 }
             }
         }
+
+        return null;
+    }
+
+    @Override
+    protected void processFollowing(GameField field) {
+        field.deleteActor(getFollowingActor());
+    }
+
+    @Override
+    protected void cameToBase(GameField field) {
+        sleepTime = sleepAfterTripTime;
+    }
+
+    @Override
+    protected void onFailedMission(GameField field) {
+        findSomethingTodo(field);
     }
 }
