@@ -1,4 +1,7 @@
-package ru.spbau.mit.drunkard.game;
+package ru.spbau.mit.drunkard.game.actors;
+
+import ru.spbau.mit.drunkard.game.GameField;
+import ru.spbau.mit.drunkard.game.GamePoint;
 
 import java.util.Random;
 
@@ -19,7 +22,7 @@ public class DrunkardActor extends GameActor {
     };
 
     @Override
-    boolean isActing() {
+    public boolean isActing() {
         return !isSleeping && !isFallen;
     }
 
@@ -45,7 +48,7 @@ public class DrunkardActor extends GameActor {
     }
 
     @Override
-    void performStep(GameField field) {
+    public void performStep(GameField field) {
         GamePoint nextPoint = getRandomDirectionStepPoint();
 
         if (field.isValidPoint(nextPoint)) {

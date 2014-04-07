@@ -1,6 +1,7 @@
 package ru.spbau.mit.drunkard;
 
 import ru.spbau.mit.drunkard.game.*;
+import ru.spbau.mit.drunkard.game.actors.*;
 
 /**
  * @author Denis Zharkov

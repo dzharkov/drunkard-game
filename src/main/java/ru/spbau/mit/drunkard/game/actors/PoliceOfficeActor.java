@@ -1,4 +1,7 @@
-package ru.spbau.mit.drunkard.game;
+package ru.spbau.mit.drunkard.game.actors;
+
+import ru.spbau.mit.drunkard.game.GameField;
+import ru.spbau.mit.drunkard.game.GamePoint;
 
 /**
  * @author Denis Zharkov
@@ -10,11 +13,11 @@ public class PoliceOfficeActor extends GameActor {
     }
 
     @Override
-    boolean isActing() {
+    public boolean isActing() {
         return false;
     }
 
     @Override
-    void performStep(GameField field) {
+    public void performStep(GameField field) {
     }
 }

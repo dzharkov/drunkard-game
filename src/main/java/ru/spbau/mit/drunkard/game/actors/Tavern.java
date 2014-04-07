@@ -1,4 +1,7 @@
-package ru.spbau.mit.drunkard.game;
+package ru.spbau.mit.drunkard.game.actors;
+
+import ru.spbau.mit.drunkard.game.GameField;
+import ru.spbau.mit.drunkard.game.GamePoint;
 
 /**
  * @author Denis Zharkov
@@ -15,12 +18,12 @@ public class Tavern extends GameActor {
     }
 
     @Override
-    boolean isActing() {
+    public boolean isActing() {
         return true;
     }
 
     @Override
-    void performStep(GameField field) {
+    public void performStep(GameField field) {
         if (wait > 0) {
             wait--;
             return;

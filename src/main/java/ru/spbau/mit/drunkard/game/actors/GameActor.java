@@ -1,4 +1,7 @@
-package ru.spbau.mit.drunkard.game;
+package ru.spbau.mit.drunkard.game.actors;
+
+import ru.spbau.mit.drunkard.game.GameField;
+import ru.spbau.mit.drunkard.game.GamePoint;
 
 /**
  * @author Denis Zharkov
@@ -13,9 +16,9 @@ abstract public class GameActor {
     protected GameActor() {
     }
 
-    abstract boolean isActing();
+    abstract public boolean isActing();
 
-    abstract void performStep(GameField field);
+    abstract public void performStep(GameField field);
 
     public GamePoint getPoint() {
         return point;

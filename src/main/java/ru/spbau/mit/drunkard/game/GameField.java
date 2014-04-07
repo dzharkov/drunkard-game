@@ -1,5 +1,7 @@
 package ru.spbau.mit.drunkard.game;
 
+import ru.spbau.mit.drunkard.game.actors.GameActor;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;

@@ -1,5 +1,7 @@
 package ru.spbau.mit.drunkard.game;
 
+import ru.spbau.mit.drunkard.game.actors.*;
+
 import java.util.Arrays;
 
 /**

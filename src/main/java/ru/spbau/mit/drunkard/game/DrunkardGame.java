@@ -1,5 +1,7 @@
 package ru.spbau.mit.drunkard.game;
 
+import ru.spbau.mit.drunkard.game.actors.GameActor;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
