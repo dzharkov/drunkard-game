@@ -27,9 +27,9 @@ public class DrunkardGameBuilder {
         GameField field = new GameField(15, 15, geometryStrategy);
 
         DrunkardGame game = new DrunkardGame(
-            field,
-            Arrays.asList(tavern, pillar, lamp, policeOffice, officerActor, bottleShopActor, beggarActor),
-            500
+                field,
+                Arrays.asList(tavern, pillar, lamp, policeOffice, officerActor, bottleShopActor, beggarActor),
+                500
         );
 
         return game;

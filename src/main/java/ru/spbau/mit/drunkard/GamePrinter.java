@@ -36,10 +36,10 @@ public class GamePrinter implements GameObserver {
 
             for (int column = -1; column <= field.getWidth(); column++) {
                 System.out.print(
-                    getCharByActor(
-                        field.at(column, row),
-                        field.isValidPoint(column, row)
-                    )
+                        getCharByActor(
+                                field.at(column, row),
+                                field.isValidPoint(column, row)
+                        )
                 );
 
                 if (isHexagonalGeometry && (column + 1) != field.getWidth()) {

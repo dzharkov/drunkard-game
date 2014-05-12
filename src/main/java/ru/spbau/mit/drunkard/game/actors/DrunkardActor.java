@@ -40,8 +40,8 @@ public class DrunkardActor extends GameActor {
         int direction = rand.nextInt(directionVectors.length);
 
         return new GamePoint(
-            getPoint().column + directionVectors[direction][0],
-            getPoint().row + directionVectors[direction][1]
+                getPoint().column + directionVectors[direction][0],
+                getPoint().row + directionVectors[direction][1]
         );
     }
 

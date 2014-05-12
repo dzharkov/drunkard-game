@@ -1,8 +1,8 @@
 package ru.spbau.mit.drunkard.game.actors;
 
 import ru.spbau.mit.drunkard.game.GameField;
-import ru.spbau.mit.drunkard.game.geometry.GamePoint;
 import ru.spbau.mit.drunkard.game.PathUtils;
+import ru.spbau.mit.drunkard.game.geometry.GamePoint;
 
 /**
  * @author Denis Zharkov
@@ -36,9 +36,9 @@ public class BeggarActor extends BasedGameActor {
             for (int column = 0; column < field.getWidth(); column++) {
                 GameActor actor;
                 if ((actor = field.at(column, row)) != null &&
-                    actor instanceof BottleActor &&
-                    PathUtils.findNextPointInPath(currentPoint, actor.getPoint(), field) != null
-                ) {
+                        actor instanceof BottleActor &&
+                        PathUtils.findNextPointInPath(currentPoint, actor.getPoint(), field) != null
+                        ) {
                     return actor;
                 }
             }
