@@ -1,4 +1,4 @@
-package ru.spbau.mit.drunkard.game;
+package ru.spbau.mit.drunkard.game.geometry;
 
 /**
  * @author Denis Zharkov
@@ -13,13 +13,21 @@ public class GamePoint {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) { return true; }
-        if (!(o instanceof GamePoint)) { return false; }
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof GamePoint)) {
+            return false;
+        }
 
         GamePoint point = (GamePoint) o;
 
-        if (column != point.column) { return false; }
-        if (row != point.row) { return false; }
+        if (column != point.column) {
+            return false;
+        }
+        if (row != point.row) {
+            return false;
+        }
 
         return true;
     }

@@ -1,8 +1,8 @@
 package ru.spbau.mit.drunkard.game.actors;
 
 import ru.spbau.mit.drunkard.game.GameField;
-import ru.spbau.mit.drunkard.game.GamePoint;
 import ru.spbau.mit.drunkard.game.PathUtils;
+import ru.spbau.mit.drunkard.game.geometry.GamePoint;
 
 /**
  * @author Denis Zharkov
@@ -25,11 +25,11 @@ public class OfficerActor extends BasedGameActor {
             GameActor actor;
 
             if (field.isValidPoint(lightenedPoint) &&
-                (actor = field.at(lightenedPoint)) != null &&
-                actor instanceof DrunkardActor &&
-                !actor.isActing() &&
-                PathUtils.findNextPointInPath(getBaseAt(), lightenedPoint, field) != null
-            ) {
+                    (actor = field.at(lightenedPoint)) != null &&
+                    actor instanceof DrunkardActor &&
+                    !actor.isActing() &&
+                    PathUtils.findNextPointInPath(getBaseAt(), lightenedPoint, field) != null
+                    ) {
                 return actor;
             }
         }

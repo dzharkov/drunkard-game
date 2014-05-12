@@ -1,6 +1,10 @@
 package ru.spbau.mit.drunkard.game;
 
 import ru.spbau.mit.drunkard.game.actors.*;
+import ru.spbau.mit.drunkard.game.geometry.GamePoint;
+import ru.spbau.mit.drunkard.game.geometry.GeometryStrategy;
+import ru.spbau.mit.drunkard.game.geometry.HexagonalGeometryStrategy;
+import ru.spbau.mit.drunkard.game.geometry.RectangularGeometryStrategy;
 
 import java.util.Arrays;
 
@@ -9,7 +13,7 @@ import java.util.Arrays;
  */
 public class DrunkardGameBuilder {
 
-    public DrunkardGame buildGame() {
+    private DrunkardGame buildGame(GeometryStrategy geometryStrategy) {
         Tavern tavern = new Tavern(new GamePoint(9, -1), new GamePoint(9, 0));
         PillarActor pillar = new PillarActor(new GamePoint(7, 7));
 
@@ -20,7 +24,7 @@ public class DrunkardGameBuilder {
         BottleShopActor bottleShopActor = new BottleShopActor(new GamePoint(-1, 4));
         BeggarActor beggarActor = new BeggarActor(new GamePoint(0, 4));
 
-        GameField field = new GameField(15, 15);
+        GameField field = new GameField(15, 15, geometryStrategy);
 
         DrunkardGame game = new DrunkardGame(
             field,
@@ -29,5 +33,13 @@ public class DrunkardGameBuilder {
         );
 
         return game;
+    }
+
+    public DrunkardGame buildRectangularGame() {
+        return buildGame(new RectangularGeometryStrategy());
+    }
+
+    public DrunkardGame buildHexagonalGame() {
+        return buildGame(new HexagonalGeometryStrategy());
     }
 }

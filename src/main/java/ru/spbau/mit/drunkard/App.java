@@ -7,7 +7,10 @@ public class App {
     private static final DrunkardGameBuilder builder = new DrunkardGameBuilder();
 
     public static void main(String[] args) {
-        DrunkardGame game = builder.buildGame();
+
+        boolean isHexagonal = args.length > 0 && args[0].startsWith("h");
+
+        DrunkardGame game = isHexagonal ? builder.buildHexagonalGame() : builder.buildRectangularGame();
         game.setObserver(new GamePrinter(game));
 
         game.run();

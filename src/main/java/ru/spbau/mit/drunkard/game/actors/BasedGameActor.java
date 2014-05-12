@@ -2,8 +2,8 @@ package ru.spbau.mit.drunkard.game.actors;
 
 
 import ru.spbau.mit.drunkard.game.GameField;
-import ru.spbau.mit.drunkard.game.GamePoint;
 import ru.spbau.mit.drunkard.game.PathUtils;
+import ru.spbau.mit.drunkard.game.geometry.GamePoint;
 
 /**
  * Actor with the base on the field's edge
@@ -31,7 +31,7 @@ abstract public class BasedGameActor extends GameActor {
             return;
         }
 
-        if (nearTheFollowing()) {
+        if (nearTheFollowing(field)) {
             processFollowing(field);
             turnToBase();
             return;
@@ -73,8 +73,9 @@ abstract public class BasedGameActor extends GameActor {
         }
     }
 
-    protected boolean nearTheFollowing() {
-        return !goingToBase && getPoint().distance(followingActor.getPoint()) == 1;
+    protected boolean nearTheFollowing(GameField field) {
+        return !goingToBase &&
+                field.getGeometryStrategy().isAdjacentPoints(getPoint(), followingActor.getPoint());
     }
 
     protected boolean nearTheBase() {
@@ -112,7 +113,10 @@ abstract public class BasedGameActor extends GameActor {
     }
 
     abstract protected GameActor findTarget(GameField field);
+
     abstract protected void processFollowing(GameField field);
+
     abstract protected void cameToBase(GameField field);
+
     abstract protected void onFailedMission(GameField field);
 }

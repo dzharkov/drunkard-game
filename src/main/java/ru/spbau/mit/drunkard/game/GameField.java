@@ -1,6 +1,8 @@
 package ru.spbau.mit.drunkard.game;
 
 import ru.spbau.mit.drunkard.game.actors.GameActor;
+import ru.spbau.mit.drunkard.game.geometry.GamePoint;
+import ru.spbau.mit.drunkard.game.geometry.GeometryStrategy;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -13,13 +15,15 @@ public class GameField {
     private final int height;
     private final int width;
     private final GameActor[][] map;
+    private final GeometryStrategy geometryStrategy;
 
     private final Set<GameActor> movableActors = new HashSet<>();
 
-    public GameField(int height, int width) {
+    public GameField(int height, int width, GeometryStrategy geometryStrategy) {
         this.height = height;
         this.width = width;
         map = new GameActor[height + 2][width + 2];
+        this.geometryStrategy = geometryStrategy;
     }
 
     public ArrayList<GameActor> getMovableActors() {
@@ -75,11 +79,8 @@ public class GameField {
     }
 
     public boolean isValidPoint(int x, int y) {
-        return x >= 0 && y >= 0
-            && y < height
-            && x < width;
+        return geometryStrategy.isValidPoint(x, y, width, height);
     }
-
 
     public int getHeight() {
         return height;
@@ -95,5 +96,9 @@ public class GameField {
 
     public GameActor at(GamePoint point) {
         return map[point.row + 1][point.column + 1];
+    }
+
+    public GeometryStrategy getGeometryStrategy() {
+        return geometryStrategy;
     }
 }

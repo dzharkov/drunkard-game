@@ -1,5 +1,7 @@
 package ru.spbau.mit.drunkard.game;
 
+import ru.spbau.mit.drunkard.game.geometry.GamePoint;
+
 import java.util.ArrayDeque;
 import java.util.Queue;
 
@@ -7,8 +9,6 @@ import java.util.Queue;
  * @author Denis Zharkov
  */
 public class PathUtils {
-    private final static int[] dx = new int[]{-1, 1, 0, 0};
-    private final static int[] dy = new int[]{0, 0, 1, -1};
 
     public static GamePoint findNextPointInPath(GamePoint from, GamePoint targetPoint, GameField gameField) {
         Queue<GamePoint> queue = new ArrayDeque<>();
@@ -22,15 +22,20 @@ public class PathUtils {
 
         while (!queue.isEmpty() && !queue.peek().equals(targetPoint)) {
             GamePoint current = queue.poll();
+            int[][] directionVectors = gameField.getGeometryStrategy().getDirectionVectors(current);
 
             for (int i = 0; i < 4; i++) {
-                GamePoint next = new GamePoint(current.column + dx[i], current.row + dy[i]);
+
+                GamePoint next = new GamePoint(
+                        current.column + directionVectors[i][0],
+                        current.row + directionVectors[i][1]
+                );
 
                 if (
-                    gameField.isValidPoint(next) &&
-                        !accessible[next.row][next.column] &&
-                        (gameField.isFree(next) || next.equals(targetPoint))
-                    ) {
+                        gameField.isValidPoint(next) &&
+                                !accessible[next.row][next.column] &&
+                                (gameField.isFree(next) || next.equals(targetPoint))
+                        ) {
                     accessible[next.row][next.column] = true;
                     prev[next.row][next.column] = current;
 

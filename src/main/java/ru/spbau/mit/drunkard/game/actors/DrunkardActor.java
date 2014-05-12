@@ -1,7 +1,8 @@
 package ru.spbau.mit.drunkard.game.actors;
 
 import ru.spbau.mit.drunkard.game.GameField;
-import ru.spbau.mit.drunkard.game.GamePoint;
+import ru.spbau.mit.drunkard.game.geometry.GamePoint;
+import ru.spbau.mit.drunkard.game.geometry.GeometryStrategy;
 
 import java.util.Random;
 
@@ -13,13 +14,13 @@ public class DrunkardActor extends GameActor {
     private boolean isFallen = false;
     private boolean hasBottle = true;
 
+    private final GeometryStrategy geometryStrategy;
+
     private static final Random rand = new Random();
-    private static final int[][] directionVectors = new int[][]{
-        new int[]{1, 0},
-        new int[]{0, 1},
-        new int[]{-1, 0},
-        new int[]{0, -1}
-    };
+
+    public DrunkardActor(GeometryStrategy geometryStrategy) {
+        this.geometryStrategy = geometryStrategy;
+    }
 
     @Override
     public boolean isActing() {
@@ -35,6 +36,7 @@ public class DrunkardActor extends GameActor {
     }
 
     private GamePoint getRandomDirectionStepPoint() {
+        int[][] directionVectors = geometryStrategy.getDirectionVectors(getPoint());
         int direction = rand.nextInt(directionVectors.length);
 
         return new GamePoint(

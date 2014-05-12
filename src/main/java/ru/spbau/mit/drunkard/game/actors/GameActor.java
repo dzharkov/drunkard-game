@@ -1,7 +1,7 @@
 package ru.spbau.mit.drunkard.game.actors;
 
 import ru.spbau.mit.drunkard.game.GameField;
-import ru.spbau.mit.drunkard.game.GamePoint;
+import ru.spbau.mit.drunkard.game.geometry.GamePoint;
 
 /**
  * @author Denis Zharkov

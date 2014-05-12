@@ -1,7 +1,7 @@
 package ru.spbau.mit.drunkard.game.actors;
 
 import ru.spbau.mit.drunkard.game.GameField;
-import ru.spbau.mit.drunkard.game.GamePoint;
+import ru.spbau.mit.drunkard.game.geometry.GamePoint;
 
 /**
  * @author Denis Zharkov
@@ -30,7 +30,7 @@ public class Tavern extends GameActor {
         }
 
         if (field.isFree(releasePoint)) {
-            field.putActor(new DrunkardActor(), releasePoint);
+            field.putActor(new DrunkardActor(field.getGeometryStrategy()), releasePoint);
             wait = sleepTime;
         }
     }
