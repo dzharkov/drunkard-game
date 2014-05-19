@@ -22,7 +22,7 @@ public class HexagonalGeometryStrategy extends GeometryStrategy {
             result[i] = directionVectorsTemplate[i].clone();
         }
 
-        int neighbourRowsDelta = point.column % 2 == 0 ? -1 : 1;
+        int neighbourRowsDelta = point.column % 2 == 0 ? 1 : -1;
         result[4][0] = neighbourRowsDelta;
         result[5][0] = neighbourRowsDelta;
 
